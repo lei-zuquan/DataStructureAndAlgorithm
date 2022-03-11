@@ -62,6 +62,9 @@ public class C01_SparseArray {
         printTwoArr(chessArr2);
     }
 
+    /*
+        打印二维数组
+     */
     private static void printTwoArr(int[][] arr) {
         System.out.println("\nStart printTwoArr");
         int readLineNo = 1;
