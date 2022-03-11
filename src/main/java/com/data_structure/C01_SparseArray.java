@@ -7,13 +7,10 @@ public class C01_SparseArray {
         int chessArr1[][] = new int[11][11];
         chessArr1[1][2] = 1;
         chessArr1[2][3] = 2;
+        chessArr1[3][0] = 5;
         // 输出原始二维数组
-        for (int[] row : chessArr1) {
-            for (int data : row) {
-                System.out.printf("%d\t", data);
-            }
-            System.out.println();
-        }
+        printTwoArr(chessArr1);
+
         // 将二维数组 转 稀疏数组
         // 1、先遍历二维数组得到非0的数据的个数
         int sum = 0;
@@ -56,6 +53,25 @@ public class C01_SparseArray {
         // 将稀疏数组 转换为 原始的二维数组
         // 1. 先读取稀疏数姐的第一行，根据第一行的数据，创建原始的二维数组
         // 2. 在读取稀疏数组后几行的数据，并赋给 原始的二维数组即可
+        int chessArr2[][] = new int[sparseArr[0][0]][sparseArr[0][1]];
+        for (int i = 1; i <= sparseArr[0][2]; i++) {
+            chessArr2[sparseArr[i][0]][sparseArr[i][1]] = sparseArr[i][2];
+        }
 
+        // 打印稀疏数组 转 二维数组
+        printTwoArr(chessArr2);
+    }
+
+    private static void printTwoArr(int[][] arr) {
+        System.out.println("\nStart printTwoArr");
+        int readLineNo = 1;
+        for (int[] ints : arr) {
+            System.out.printf("%d:\t", readLineNo++);
+            for (int anInt : ints) {
+                System.out.printf("%d\t", anInt);
+            }
+            System.out.println();
+        }
+        System.out.println("\nFinished printTwoArr");
     }
 }
