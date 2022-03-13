@@ -63,7 +63,7 @@ public class C01_SingleLinkedList {
         return temp;
     }
 
-    // 将单链表反转
+    // 将单链表反转【腾讯面试题】
     // 思路：1.创建一个新的链表 2.将原来的链表遍历 每次插入到新链表的头部
     public static void reverseList(PeopleNode head) {
         PeopleNode newHead = new PeopleNode(0, "", 0);
