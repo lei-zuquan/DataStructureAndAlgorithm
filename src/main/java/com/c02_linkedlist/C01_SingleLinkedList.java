@@ -20,8 +20,13 @@ public class C01_SingleLinkedList {
         singleLinkedList.addByOrder(p1);
         singleLinkedList.addByOrder(p3);
 
-
         // 显示打印
+        singleLinkedList.list();
+
+        PeopleNode newP = new PeopleNode(2, "李哥", 25);
+        singleLinkedList.update(newP);
+
+        System.out.println("update after");
         singleLinkedList.list();
     }
 }
@@ -78,6 +83,33 @@ class SingleLinkedList {
         }
     }
 
+    // 修改节点的信息，根据no编号来修改，即No 编号不能修改
+    // 说明
+    // 1.根据 newPeopleNode 的 no 来修改即可
+    public void update(PeopleNode newPeopleNode) {
+        // 判断是否空
+        if (head.next == null) {
+            System.out.println("链表为空");
+            return;
+        }
+        // 找到需要修改的节点，根据no 编号
+        PeopleNode temp = head.next;
+        while (true) {
+            if (temp == null) {
+                System.out.println("没有找到节点信息");
+                break;
+            }
+            if (temp.no == newPeopleNode.no) {
+                // 找到
+                temp.name = newPeopleNode.name;
+                temp.age = newPeopleNode.age;
+                System.out.println("找到，并完成信息的更新");
+                break;
+            }
+            temp = temp.next;
+        }
+
+    }
     // 显示链表【遍历】
     public void list() {
         // 判断链表是否为空
