@@ -1,5 +1,7 @@
 package com.c02_linkedlist;
 
+import java.util.Stack;
+
 public class C01_SingleLinkedList {
     public static void main(String[] args) {
         // 测试数据
@@ -38,6 +40,9 @@ public class C01_SingleLinkedList {
         System.out.println("反转链表");
         reverseList(singleLinkedList.getHead());
         singleLinkedList.list();
+
+        System.out.println("倒序打印--------------------");
+        reversePrint(singleLinkedList.getHead());
     }
 
     // 查找单链表中的倒数第K个结点【新浪面试题】
@@ -88,6 +93,23 @@ public class C01_SingleLinkedList {
         head.next = newHead.next;
         // 最后将新的链表头指向空，及时释放内存
         newHead.next = null;
+    }
+
+    // 从逆序打印单链表【百度题】【方式1：反向遍历，方式2：Stack栈】
+    public static void reversePrint(PeopleNode head){
+        if (head.next == null) {
+            System.out.println("链表为空，无法打印");
+            return;
+        }
+        Stack<PeopleNode> stack = new Stack<>();
+        PeopleNode temp = head;
+        while (temp.next != null) {
+            stack.push(temp.next);
+            temp = temp.next;
+        }
+        while (stack.size() > 0) {
+            System.out.printf("节点：[%s]\n", stack.pop());
+        }
     }
 
 }
