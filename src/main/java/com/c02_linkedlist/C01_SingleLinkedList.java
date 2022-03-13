@@ -30,19 +30,47 @@ public class C01_SingleLinkedList {
         singleLinkedList.list();
 
         System.out.println("delete node test");
-        singleLinkedList.delete(3);
+        //singleLinkedList.delete(3);
         singleLinkedList.list();
 
         System.out.println("有效节点数：" + singleLinkedList.getLength());
+        System.out.println(getBackTopKNode(singleLinkedList.getHead(), 1));
     }
 
+    // 查找单链表中的倒数第K个结点【新浪面试题】
+    // 思路：单向链表只能顺序访问，先获取链表的数量，使用：链表的数量 - 倒数第K个
+    public static PeopleNode getBackTopKNode(PeopleNode head, int backTopK) {
+        int count = 0;
+        PeopleNode temp = head;
+        while (temp.next != null) {
+            count++;
+            temp = temp.next;
+        }
+        if (backTopK > count) {
+            System.out.printf("无法获取，链表数量为：[%d], 获取倒数[%d]\n", count, backTopK);
+            return null;
+        }
+
+        temp = head.next;
+        for (int i = 0; i < count - backTopK; i++) {
+            temp = temp.next;
+        }
+        // head 1  2  3
+        // count:3,  backTopK:1, count - backTopK = 2
+        return temp;
+    }
 
 }
 
 // 定义SingleLinkedList 管理我们的人物
 class SingleLinkedList {
+
     // 先初始化一个头节点，头节点不要动，不存放具体的数据
     private PeopleNode head = new PeopleNode(0, "", 0);
+
+    public PeopleNode getHead() {
+        return head;
+    }
 
     // 添加节点到单向链表
     // 思路，当不考虑编号顺序时
