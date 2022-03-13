@@ -28,7 +28,15 @@ public class C01_SingleLinkedList {
 
         System.out.println("update after");
         singleLinkedList.list();
+
+        System.out.println("delete node test");
+        singleLinkedList.delete(3);
+        singleLinkedList.list();
+
+        System.out.println("有效节点数：" + singleLinkedList.getLength());
     }
+
+
 }
 
 // 定义SingleLinkedList 管理我们的人物
@@ -110,6 +118,22 @@ class SingleLinkedList {
         }
 
     }
+
+    // 删除节点
+    public void delete(int no) {
+        PeopleNode temp = head;
+        while (true) {
+            if (temp.next == null) {
+                System.out.println("没有找到数据，无法进行删除");
+                break;
+            }
+            if (temp.next.no == no) {
+                temp.next = temp.next.next;
+                break;
+            }
+            temp = temp.next;
+        }
+    }
     // 显示链表【遍历】
     public void list() {
         // 判断链表是否为空
@@ -130,7 +154,16 @@ class SingleLinkedList {
             temp = temp.next;
         }
     }
-
+    // 获取到单向链表的节点的个数
+    public int getLength() {
+        PeopleNode temp = head;
+        int length = 0;
+        while (temp.next != null) {
+            length++;
+            temp = temp.next;
+        }
+        return length;
+    }
 }
 
 // 定义PeopleNode, 每个PeopleNode 对象就是一个节点
