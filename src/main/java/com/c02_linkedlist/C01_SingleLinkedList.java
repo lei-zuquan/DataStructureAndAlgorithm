@@ -30,11 +30,14 @@ public class C01_SingleLinkedList {
         singleLinkedList.list();
 
         System.out.println("delete node test");
-        //singleLinkedList.delete(3);
+        singleLinkedList.delete(3);
         singleLinkedList.list();
 
         System.out.println("有效节点数：" + singleLinkedList.getLength());
         System.out.println(getBackTopKNode(singleLinkedList.getHead(), 1));
+        System.out.println("反转链表");
+        reverseList(singleLinkedList.getHead());
+        singleLinkedList.list();
     }
 
     // 查找单链表中的倒数第K个结点【新浪面试题】
@@ -55,9 +58,36 @@ public class C01_SingleLinkedList {
         for (int i = 0; i < count - backTopK; i++) {
             temp = temp.next;
         }
-        // head 1  2  3
+        // 数据示例：head 1  2  3
         // count:3,  backTopK:1, count - backTopK = 2
         return temp;
+    }
+
+    // 将单链表反转
+    // 思路：1.创建一个新的链表 2.将原来的链表遍历 每次插入到新链表的头部
+    public static void reverseList(PeopleNode head) {
+        PeopleNode newHead = new PeopleNode(0, "", 0);
+        PeopleNode temp = head;
+        while (temp.next != null) {
+            // 1.首先将需要移动的节点记录起来
+            PeopleNode needMove = temp.next;
+            // 2.将需要移动的节点从老的单向链表移除掉
+            temp.next = temp.next.next;
+
+            // 3.将需要移动的节点移动至新的单向链表中
+            // new: head --> 1
+            // old: head --> 1 --> 2 --> 3
+            if (newHead.next != null) {
+                needMove.next = newHead.next;
+            } else {
+                needMove.next = null;
+            }
+            newHead.next = needMove;
+        }
+        // 将老的链表的头节点指向新的单向链表的第一个有效节点
+        head.next = newHead.next;
+        // 最后将新的链表头指向空，及时释放内存
+        newHead.next = null;
     }
 
 }
