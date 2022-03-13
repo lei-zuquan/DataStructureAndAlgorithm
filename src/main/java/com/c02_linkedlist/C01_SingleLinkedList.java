@@ -11,9 +11,15 @@ public class C01_SingleLinkedList {
         // 创建链表
         SingleLinkedList singleLinkedList = new SingleLinkedList();
         // 加入
-        singleLinkedList.add(p1);
-        singleLinkedList.add(p2);
-        singleLinkedList.add(p3);
+//        singleLinkedList.add(p1);
+//        singleLinkedList.add(p2);
+//        singleLinkedList.add(p3);
+        singleLinkedList.addByOrder(p2);
+        singleLinkedList.addByOrder(p3);
+        singleLinkedList.addByOrder(p1);
+        singleLinkedList.addByOrder(p1);
+        singleLinkedList.addByOrder(p3);
+
 
         // 显示打印
         singleLinkedList.list();
@@ -44,6 +50,32 @@ class SingleLinkedList {
         // 当退出while 循环时，temp 就是最后一个节点
         // 将最后这个节点的next 指向新的节点
         temp.next = peopleNode;
+    }
+
+    // 根据排名将人物插入到指定位置（如果有这个排名，则添加失败，并给出提示）
+    public void addByOrder(PeopleNode peopleNode) {
+        PeopleNode temp = head;
+        while (true) {
+            // 如果遍历到了链表的尾部，则直接插入
+            if (temp.next == null) {
+                temp.next = peopleNode;
+                peopleNode.next = null;
+                break;
+            }
+            // 如果在遍历期间，发现数据已在，不再插入
+            if (peopleNode.no == temp.next.no) {
+                System.out.println("数据重复，不再插入");
+                break;
+            }
+            // 如果在遍历期间，发现需要在中间插入则插入
+            if (peopleNode.no < temp.next.no) {
+                peopleNode.next = temp.next;
+                temp.next = peopleNode;
+                break;
+            }
+
+            temp = temp.next; // 后移，遍历
+        }
     }
 
     // 显示链表【遍历】
