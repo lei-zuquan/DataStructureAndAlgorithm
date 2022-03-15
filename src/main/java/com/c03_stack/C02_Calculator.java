@@ -3,7 +3,7 @@ package com.c03_stack;
 public class C02_Calculator {
     public static void main(String[] args) {
         // 完成表达式
-        String expression = "3+2*6-2";
+        String expression = "3+2*60-2"; // 如何处理多位数的问题 ？
         // 创建两个栈，数栈，一个符号栈
         ArrayStack2 numStack = new ArrayStack2(10);
         ArrayStack2 operStack = new ArrayStack2(10);
@@ -14,6 +14,7 @@ public class C02_Calculator {
         int oper = 0;
         int res = 0;
         char ch = ' '; // 将每次扫描得到的char 保存到ch
+        String keepNum = ""; // 用于拼接多位数
         // 开始while 循环的扫描expression
         while (true) {
             // 依次得到experssion 的每一个字符
@@ -42,7 +43,26 @@ public class C02_Calculator {
                     operStack.push(ch); // 1+ 3
                 }
             } else { // 如果是数，则直接入数栈
-                numStack.push(ch - 48);
+                // numStack.push(ch - 48);
+                // 分析思路
+                // 1.当处理多位数时，不能发现是一个数就立即入栈，因为他可能是多位数
+                // 2.在处理数，需要向expression 的表达式的index 后再看一位，如果是数就进行扫描，如果是符号才入栈
+                // 3.因此需要定义一个变量 字符吅，用于拼接
+
+                // 处理多位数
+                keepNum += ch;
+                // 如果ch 已经是expression 的最后一位，就直接入栈
+                if (index == expression.length() -1) {
+                    numStack.push(Integer.parseInt(keepNum));
+                } else {
+                    if (operStack.isOper(expression.substring(index+1, index + 2).charAt(0))) {
+                        // 如果后一位是运算符，则入栈keepNum = "1" 或者 “123”
+                        numStack.push(Integer.parseInt(keepNum));
+                        // 重要的！！！！！，keepNum 清空
+                        keepNum = "";
+                    }
+                }
+
             }
             // 让 index + 1, 并判断是否扫描到expression 最后
             index++;
