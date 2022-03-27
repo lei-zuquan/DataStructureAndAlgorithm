@@ -6,6 +6,16 @@ import java.util.Stack;
 
 public class C03_PolandNotation {
     public static void main(String[] args) {
+        // 完成将一个中缀表达式转成后缀表达式的功能
+        // 说明
+        // 1.   1+((2+3)*4)-5 => 转成 1 2 3 4 * + 5 -
+        // 2.   因为直接对str 进行操作，不方便，因此先将“1+((2+3)*4)-5” =》中缀的表达式对应的List
+        //      即“1+((2+3)*4)-5”  =》 ArrayList [1,+,(,(,2,+,3,),*,4),-,5]
+        String expression = "1+((2+3)*4)-5";
+        List<String> infixExpressionList = toInfixExpressionList(expression);
+        System.out.println(infixExpressionList); // ArrayList [1,+,(,(,2,+,3,),*,4),-,5]
+
+        /*
         // 先定义个逆波兰表达式
         // (3+4)*5 - 6 => 3 4 + 5 * 6 -
         // 4 * 5 - 8 + 60 + 8 / 2 = 4 5 * 8 - 60 + 8 2 / +
@@ -19,7 +29,34 @@ public class C03_PolandNotation {
         System.out.println("List:" + list);
         int res = calculate(list);
         System.out.println("计算的结果是=" + res);
+        */
     }
+
+    // 方法，将中缀表达式转成对应的list
+    // s="1+((2+3)*4)-5"
+    public static List<String> toInfixExpressionList(String s) {
+        // 定义一个List, 存放中缀表达式 对应的内容
+        ArrayList<String> ls = new ArrayList<>();
+        int i = 0; // 这时是一个指针，用于遍历中缀表达式字符串
+        String str; // 对多位数的拼接
+        char c; // 每遍历到一个字符，就放入到c
+        do {
+            // 如果c 是一个非数字，就需要加入到ls
+            if ((c=s.charAt(i)) < 48 || (c=s.charAt(i)) > 57) {
+                ls.add("" + c);
+                i++; // i 需要后移
+            } else { // 如果是一个数，需要考虑多位数
+                str = ""; // 先将str 置成"" '0'[48] --> '9'[57]
+                while (i < s.length() && (c=s.charAt(i)) >= 48 && (c=s.charAt(i)) <= 57) {
+                    str += c; // 拼接
+                    i++;
+                }
+                ls.add(str);
+            }
+        } while (i < s.length());
+        return ls;
+    }
+
 
     // 将一个逆波兰表达式，依次将数据和运算符放入到ArrayList 中
     public static List<String> getListString(String suffixExpression) {
