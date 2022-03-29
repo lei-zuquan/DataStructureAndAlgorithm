@@ -13,13 +13,14 @@ public class C03_PolandNotation {
         //      即“1+((2+3)*4)-5”  =》 ArrayList [1,+,(,(,2,+,3,),*,4),-,5]
         // 3 .  将得到的中缀表达式对应的List ==》 后缀表达式对应的List
         //      即ArrayList [1,+,(,(,2,+,3,),*,4),-,5] ==>  ArrayList [1,2,3,+,4,*,+,5,-]
-        String expression = "1+((2+3)*4)-5";
+        String expression = "1+((2+3)*4)-5"; // 注意表达式
         List<String> infixExpressionList = toInfixExpressionList(expression);
         System.out.println(infixExpressionList); // ArrayList [1,2,3,+,4,*,+,5,-]
 
         List<String> suffixExpression = parseSuffixExpression(infixExpressionList);
         System.out.println("后缀表达式对应的List:" + suffixExpression); // ArrayList [1,2,3,+,4,*,+,5,-]
 
+        System.out.printf("expression=%d\n", calculate(suffixExpression));
         /*
         // 先定义个逆波兰表达式
         // (3+4)*5 - 6 => 3 4 + 5 * 6 -
